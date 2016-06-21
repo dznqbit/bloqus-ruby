@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'bloqus/ruby/version'
+require 'bloqus/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "bloqus-ruby"
-  spec.version       = Bloqus::Ruby::VERSION
+  spec.name          = "bloqus"
+  spec.version       = Bloqus::VERSION
   spec.authors       = ["Quinton Harris"]
   spec.email         = ["quinton.harris@gmail.com"]
 
@@ -27,7 +27,12 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency 'fast_blank'
+
   spec.add_development_dependency "bundler", "~> 1.11"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "yard"
+  spec.add_development_dependency "guard"
+  spec.add_development_dependency "guard-rspec"
 end

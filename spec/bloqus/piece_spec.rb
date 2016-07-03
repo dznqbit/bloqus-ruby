@@ -27,4 +27,16 @@ describe Bloqus::Piece do
       expect(subject.to_s).to eq(s)
     end
   end
+
+  describe '::new' do
+    subject { described_class.new(cells) }
+
+    context 'one row is shorter than the others' do
+      let(:cells) { [[true, true, true], [true]] }
+
+      it 'should unify length of all rows' do
+        expect(subject.cells).to eq([[true, true, true], [true, false, false]])
+      end
+    end
+  end
 end

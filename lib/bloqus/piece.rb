@@ -1,6 +1,7 @@
 module Bloqus
   # Defines the shape of a piece.
   class Piece
+    # Array(Array(true/false))
     attr_reader :cells
 
     # Loads a Piece database.
@@ -39,8 +40,15 @@ module Bloqus
       new(cells)
     end
 
+    # Initializes a Piece.
+    # @param cells [Array] an Array of Arrays describing the shape of the piece.
     def initialize(cells)
-      @cells = cells
+      cell_width = cells.map(&:length).max
+
+      @cells = cells.map do |row|
+        Array.new(cell_width) { |i| row[i] ? true : false }
+      end.
+      freeze
     end
 
     def to_s

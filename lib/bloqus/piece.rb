@@ -62,5 +62,9 @@ module Bloqus
     def height
       cells.length
     end
+
+    def size
+      cells.reduce(0) { |m, r| m += r.find_all(&:itself).length }
+    end
   end
 end

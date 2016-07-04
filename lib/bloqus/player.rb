@@ -1,7 +1,6 @@
 module Bloqus
   class Player
     attr_reader :color
-
-    # pieces remaining... ?
+    attr_reader :name
   end
 end

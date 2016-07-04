@@ -1,30 +1,37 @@
 require 'fast_blank'
 
 module Bloqus
-  Coordinate = Struct.new(:x, :y)
+  Coordinates = Struct.new(:x, :y)
 
   module Colors
-    BLUE = 'blue'
-    YELLOW = 'yellow'
-    RED = 'red'
-    GREEN = 'green'
+    BLUE = :blue
+    YELLOW = :yellow
+    RED = :red
+    GREEN = :green
+
+    def self.all
+      constants.map { |c| const_get(c) }
+    end
   end
 
   module Rotations
-    ZERO = 0
-    NINETY = 1
-    ONE_EIGHTY = 2
-    TWO_SEVENTY = 3
+    ZERO = :zero
+    NINETY = :ninety
+    ONE_EIGHTY = :one_eighty
+    TWO_SEVENTY = :two_seventy
 
     # 'flipped' along the Y axis
-    FLIPPED_ZERO = 4
-    FLIPPED_NINETY = 5
-    FLIPPED_ONE_EIGHTY = 6
-    FLIPPED_TWO_SEVENTY = 7
+    FLIPPED_ZERO = :flipped_zero
+    FLIPPED_NINETY = :flipped_ninety
+    FLIPPED_ONE_EIGHTY = :flipped_one_eighty
+    FLIPPED_TWO_SEVENTY = :flipped_two_seventy
+
+    def self.all
+      constants.map { |c| const_get(c) }
+    end
   end
 end
 
-require 'bloqus/coordinate'
 require 'bloqus/board'
 require 'bloqus/game'
 require 'bloqus/piece'

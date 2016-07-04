@@ -54,5 +54,13 @@ module Bloqus
     def to_s
       cells.map { |row| row.map { |c| c ? '.' : ' ' }.join('') }.join("\n")
     end
+
+    def width
+      cells.first.length
+    end
+
+    def height
+      cells.length
+    end
   end
 end

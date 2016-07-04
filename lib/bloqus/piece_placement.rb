@@ -3,14 +3,14 @@ require 'bloqus/text_cell_presenter'
 module Bloqus
   # Represents a placed piece.
   class PiecePlacement
-    attr_reader :coordinate
+    attr_reader :coordinates
     attr_reader :rotated_piece
     attr_reader :color
 
-    def initialize(color:, rotated_piece:, coordinate:)
+    def initialize(color:, rotated_piece:, coordinates:)
       @color = color
       @rotated_piece = rotated_piece
-      @coordinate = coordinate
+      @coordinates = coordinates
     end
 
     def cells

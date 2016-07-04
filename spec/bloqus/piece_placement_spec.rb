@@ -4,12 +4,12 @@ describe Bloqus::PiecePlacement do
   let(:piece) { Bloqus::Piece.from_s("...\n.") }
   let(:rotation) { Bloqus::Rotations::ZERO }
   let(:color) { Bloqus::Colors::GREEN }
-  let(:coordinate) { Bloqus::Coordinate.new(0, 0) }
+  let(:coordinates) { Bloqus::Coordinates.new(0, 0) }
 
   let(:rotated_piece) { Bloqus::RotatedPiece.new(piece: piece, rotation: rotation) }
 
   let(:piece_placement) do
-    described_class.new(coordinate: coordinate, color: color, rotated_piece: rotated_piece)
+    described_class.new(coordinates: coordinates, color: color, rotated_piece: rotated_piece)
   end
 
   describe '#to_s' do

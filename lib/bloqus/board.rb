@@ -22,19 +22,19 @@ module Bloqus
     private
 
     def build_cells(width, height, piece_placements)
-      cells = Array.new(height, false) { Array.new(width, false) }
+      cells = Array.new(height) { Array.new(width, false) }
 
       piece_placements.each do |piece_placement|
         piece_cells = piece_placement.cells
         piece_cells.each_with_index do |piece_cell_row, y|
-          row_y = piece_placement.coordinate.y + y
+          row_y = piece_placement.coordinates.y + y
           raise OutOfBoundsError if row_y >= height
 
           piece_cell_row.each_with_index do |piece_cell, x|
             # Ignore writing blank space.
             next unless piece_cell
 
-            cell_x = piece_placement.coordinate.x + x
+            cell_x = piece_placement.coordinates.x + x
             raise OutOfBoundsError if cell_x >= width
 
             raise DoubleAssignmentError if cells[row_y][cell_x]

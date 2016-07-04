@@ -17,7 +17,7 @@ describe Bloqus::Board do
     Bloqus::PiecePlacement.new(
       color: green,
       rotated_piece: Bloqus::RotatedPiece.new(piece: piece, rotation: Bloqus::Rotations::ONE_EIGHTY),
-      coordinate: Bloqus::Coordinate.new(1, 1)
+      coordinates: Bloqus::Coordinates.new(1, 1)
     )
   }
 
@@ -25,7 +25,7 @@ describe Bloqus::Board do
     Bloqus::PiecePlacement.new(
       color: red,
       rotated_piece: Bloqus::RotatedPiece.new(piece: piece, rotation: Bloqus::Rotations::FLIPPED_NINETY),
-      coordinate: Bloqus::Coordinate.new(3, 2)
+      coordinates: Bloqus::Coordinates.new(3, 2)
     )
   }
 
@@ -48,7 +48,7 @@ describe Bloqus::Board do
           Bloqus::PiecePlacement.new(
             color: green,
             rotated_piece: Bloqus::RotatedPiece.new(piece: piece, rotation: Bloqus::Rotations::ZERO),
-            coordinate: Bloqus::Coordinate.new(4,1)
+            coordinates: Bloqus::Coordinates.new(4,1)
           )
         }
 
@@ -62,7 +62,7 @@ describe Bloqus::Board do
           Bloqus::PiecePlacement.new(
             color: green,
             rotated_piece: Bloqus::RotatedPiece.new(piece: piece, rotation: Bloqus::Rotations::ZERO),
-            coordinate: Bloqus::Coordinate.new(1,1)
+            coordinates: Bloqus::Coordinates.new(1,1)
           )
         }
 

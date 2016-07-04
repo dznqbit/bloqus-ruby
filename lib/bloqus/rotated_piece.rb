@@ -4,7 +4,7 @@ module Bloqus
 
     attr_reader :rotation
 
-    def_delegators :@rotated_piece, :to_s, :cells
+    def_delegators :@rotated_piece, :to_s, :cells, :width, :height
 
     def initialize(piece:, rotation:)
       @piece = piece

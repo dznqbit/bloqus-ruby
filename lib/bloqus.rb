@@ -1,8 +1,6 @@
 require 'fast_blank'
 
 module Bloqus
-  Coordinates = Struct.new(:x, :y)
-
   module Colors
     BLUE = :blue
     YELLOW = :yellow
@@ -32,6 +30,8 @@ module Bloqus
   end
 end
 
+require 'bloqus/coordinates'
+require 'bloqus/cell'
 require 'bloqus/board'
 require 'bloqus/game'
 require 'bloqus/piece'

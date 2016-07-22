@@ -39,7 +39,7 @@ describe Bloqus::CellCollection do
   end
 
   describe '#find_all' do
-    let(:cells) { [[true, true, true], [true]] }
+    let(:cells) { simple_cells }
 
     it 'should return all cells' do
       expect(subject.find_all(&:filled?).length).to eq(4)

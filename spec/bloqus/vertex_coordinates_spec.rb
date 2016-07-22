@@ -4,18 +4,25 @@ describe Bloqus::VertexCoordinates do
   let(:x) { rand(20) + 1 }
   let(:y) { rand(20) + 1 }
 
-  let(:vertex_coordinate) { described_class.new(x, y) }
+  let(:vertex_coordinates) { described_class.new(x, y) }
+  subject { vertex_coordinates }
 
   describe '#cell_coordinates' do
-    subject { vertex_coordinate.cell_coordinates }
+    subject { vertex_coordinates.cell_coordinates }
 
     it 'should return correct array' do
       expect(subject).to eq([
-        Bloqus::CellCoordinates.new(x, y),
-        Bloqus::CellCoordinates.new(x - 1, y),
-        Bloqus::CellCoordinates.new(x - 1, y - 1),
-        Bloqus::CellCoordinates.new(x, y - 1),
+        cc(x, y),
+        cc(x - 1, y),
+        cc(x - 1, y - 1),
+        cc(x, y - 1),
       ])
+    end
+  end
+
+  describe '#neighbors' do
+    it 'should return described class' do
+      expect(subject.neighbors.first).to be_a(described_class)
     end
   end
 end

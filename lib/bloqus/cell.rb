@@ -1,5 +1,9 @@
 module Bloqus
   Cell = Struct.new(:coordinates, :value) do
+    def self.null(coordinates)
+      new(coordinates, nil)
+    end
+
     extend Forwardable
 
     def_delegator :@coordinates, :corners
@@ -7,6 +11,10 @@ module Bloqus
 
     def filled?
       true if value
+    end
+
+    def to_s
+      "[#{coordinates} #{value.inspect}]"
     end
 
     private

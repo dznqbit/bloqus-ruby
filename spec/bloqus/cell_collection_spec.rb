@@ -16,6 +16,28 @@ describe Bloqus::CellCollection do
     end
   end
 
+  describe '#cell' do
+    let(:cells) { [[true, true, true], [true]] }
+    subject { cell_collection.cell(coordinate) }
+
+    context 'coordinate inside collection space' do
+      let(:coordinate) { Bloqus::Coordinates.new(0, 0) }
+      it { expect(subject.filled?).to be true }
+    end
+
+    context 'coordinate outside collection space' do
+      context 'too big' do
+        let(:coordinate) { Bloqus::Coordinates.new(5, 0) }
+        it { expect(subject.filled?).to be_falsey }
+      end
+
+      context 'too small' do
+        let(:coordinate) { Bloqus::Coordinates.new(-1, 0) }
+        it { expect(subject.filled?).to be_falsey }
+      end
+    end
+  end
+
   describe '#find_all' do
     let(:cells) { [[true, true, true], [true]] }
 
@@ -42,5 +64,12 @@ describe Bloqus::CellCollection do
         expect(subject).to eq("aab\nc")
       end
     end
+  end
+
+  private
+
+  # Convenience vertex coordinate
+  def vc(x, y)
+    Bloqus::VertexCoordinate.new(x, y)
   end
 end

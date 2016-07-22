@@ -1,6 +1,7 @@
 require 'bloqus/cell'
 
 module Bloqus
+  # Rough representation of a Cell grid.
   class CellCollection
     # @param cells [Array] an Array of Arrays describing the collection.
     def initialize(cells_a)
@@ -35,11 +36,17 @@ module Bloqus
       end
     end
 
-    def vertex(coordinates)
-    end
+    # def vertex(coordinates)
+    # end
 
     def cell(coordinates)
-      rows[coordinates.y][coordinates.x]
+      x, y = coordinates.to_a
+
+      if (0...width).include?(x) && (0...height).include?(y)
+        rows[coordinates.y].fetch(coordinates.x)
+      else
+        Bloqus::Cell.null(coordinates)
+      end
     end
 
     def find_all(&blk)
@@ -48,8 +55,21 @@ module Bloqus
       end
     end
 
+    # Returns a flat map of Cells.
+    def map(&blk)
+      rows.flat_map { |row| row.map(&blk) }
+    end
+
     private
 
     attr_reader :rows
+
+    def width
+      @rows.first.length
+    end
+
+    def height
+      @rows.length
+    end
   end
 end

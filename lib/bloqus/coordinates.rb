@@ -36,15 +36,4 @@ module Bloqus
       "C#{super}"
     end
   end
-
-  VertexCoordinates = Class.new(Coordinates) do
-    # Clockwise, starting with lower right.
-    def cell_coordinates
-      [[0, 0], [-1, 0], [-1, -1], [0, -1]].map { |dx, dy| CellCoordinates.new(x + dx, y + dy) }
-    end
-
-    def to_s
-      "V#{super}"
-    end
-  end
 end

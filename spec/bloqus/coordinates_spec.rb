@@ -23,14 +23,14 @@ describe Bloqus::Coordinates do
   end
 
   describe '#neighbors' do
-    subject { vertex_coordinates.neighbors }
+    subject { coordinates.neighbors }
 
     it 'should work' do
       expect(subject).to eq([
-        vc(x + 1, y),
-        vc(x, y + 1),
-        vc(x - 1, y),
-        vc(x, y - 1)
+        described_class.new(x + 1, y),
+        described_class.new(x, y + 1),
+        described_class.new(x - 1, y),
+        described_class.new(x, y - 1)
       ])
     end
   end

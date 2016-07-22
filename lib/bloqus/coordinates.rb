@@ -15,6 +15,11 @@ module Bloqus
     def inspect
       to_s
     end
+
+    # Clockwise, starting with due right.
+    def neighbors
+      [[1, 0], [0, 1], [-1, 0], [0, -1]].map { |dx, dy| self.class.new(x + dx, y + dy) }
+    end
   end
 
   # VertexCoordinates and CellCoordinates are offset by +0.5.
@@ -35,7 +40,7 @@ module Bloqus
   VertexCoordinates = Class.new(Coordinates) do
     # Clockwise, starting with lower right.
     def cell_coordinates
-      [[0, 0], [-1, 0], [-1, -1], [0, -1]].map { |cx, cy| CellCoordinates.new(x + cx, y + cy) }
+      [[0, 0], [-1, 0], [-1, -1], [0, -1]].map { |dx, dy| CellCoordinates.new(x + dx, y + dy) }
     end
 
     def to_s

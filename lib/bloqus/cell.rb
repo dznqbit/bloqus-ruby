@@ -14,8 +14,10 @@ module Bloqus
     end
 
     def to_s
-      "[#{coordinates} #{value.inspect}]"
+      "(#{coordinates}: #{value.inspect})"
     end
+
+    def inspect; to_s; end
 
     private
 

@@ -42,6 +42,24 @@ module Bloqus
       v2
     end
 
+    def to_s
+      "E #{v1.inspect}-#{v2.inspect}"
+    end
+
+    def inspect
+      to_s
+    end
+
+    def ==(rhs)
+      v1 == rhs.send(:v1) &&
+      v2 == rhs.send(:v2) &&
+      cell_collection == rhs.send(:cell_collection)
+    end
+
+    def direction
+      [v2.x - v1.x, v2.y - v1.y]
+    end
+
     private
 
     attr_reader :cell_collection, :v1, :v2
@@ -61,10 +79,6 @@ module Bloqus
       unless all_directions.include?(direction)
         raise ArgumentError.new("Invalid interval #{direction}")
       end
-    end
-
-    def direction
-      [v2.x - v1.x, v2.y - v1.y]
     end
 
     def cells

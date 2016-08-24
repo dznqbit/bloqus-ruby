@@ -4,6 +4,8 @@ module Bloqus
     extend Forwardable
     include Directions
 
+    attr_reader :coordinates
+
     # @param cell_collection [CellCollection] the CellCollection
     # @param coordinates [Coordinates] the coordinates of the Vertex
     def self.cc_new(cell_collection:, coordinates:)
@@ -18,22 +20,14 @@ module Bloqus
         group_by(&:itself)
 
       three_values = counted_hash.values.any? { |v| [1, 3].include?(v.length) }
-      at_least_one_filled = counted_hash.keys.compact.first
+      at_least_one_filled = counted_hash.keys.find(&:itself)
 
       three_values && at_least_one_filled
     end
 
     # Returns all adjacent edges.
     def edges
-      all_edges = clockwise_directions.map do |direction|
-        neighbor_vc = VertexCoordinates.new(
-          coordinates.x + direction[0],
-          coordinates.y + direction[1]
-        )
-
-        neighbor_v = vertex(neighbor_vc)
-        edge = edge(self, neighbor_v)
-      end
+      neighbor_verticies.map { |vertex| edge(coordinates, vertex.coordinates) }
     end
 
     # Returns all adjacent cells.
@@ -48,6 +42,14 @@ module Bloqus
       cell_collection == rhs.send(:cell_collection)
     end
 
+    def to_s
+      "@#{coordinates}"
+    end
+
+    def inspect
+      to_s
+    end
+
     private
 
     def self.new(cell_collection:, coordinates:)
@@ -55,11 +57,15 @@ module Bloqus
     end
 
     def initialize(cell_collection:, coordinates:)
-      @coordinates = coordinates
+      @coordinates = VertexCoordinates.new(coordinates.x, coordinates.y)
       @cell_collection = cell_collection
     end
 
-    attr_reader :cell_collection, :coordinates
+    def neighbor_verticies
+      coordinates.neighbors.lazy.map { |nc| vertex(nc) }
+    end
+
+    attr_reader :cell_collection
 
     def_delegators :cell_collection, :cell, :edge, :vertex
     def_delegators :coordinates, :cell_coordinates, :x, :y

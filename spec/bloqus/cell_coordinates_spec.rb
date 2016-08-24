@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'bloqus/coordinates'
 
 describe Bloqus::CellCoordinates do
   let(:x) { rand(20) + 1 }

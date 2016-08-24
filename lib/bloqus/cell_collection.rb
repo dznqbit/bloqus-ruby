@@ -21,14 +21,26 @@ module Bloqus
     end
 
     def edge(vc1, vc2)
+      unless [vc1, vc2].all? { |v| v.is_a?(Coordinates) }
+        raise ArgumentError.new("coordinates cannot be a #{coordinates.class}")
+      end
+
       Bloqus::Edge.cc_new(cell_collection: self, v1: vertex(vc1), v2: vertex(vc2))
     end
 
     def vertex(coordinates)
+      unless coordinates.is_a?(Coordinates)
+        raise ArgumentError.new("coordinates cannot be a #{coordinates.class}")
+      end
+
       Bloqus::Vertex.cc_new(cell_collection: self, coordinates: coordinates)
     end
 
     def cell(coordinates)
+      unless coordinates.is_a?(Coordinates)
+        raise ArgumentError.new("coordinates cannot be a #{coordinates.class}")
+      end
+
       # We cannot naively allow any coordinates, because negative coordinates improperly
       # address the "rear end" of a ruby array.
       value = if (0...height).include?(coordinates.y) && (0...width).include?(coordinates.x)
@@ -42,10 +54,6 @@ module Bloqus
       )
     end
 
-    private
-
-    attr_reader :grid
-
     def width
       @grid.first.length
     end
@@ -53,5 +61,9 @@ module Bloqus
     def height
       @grid.length
     end
+
+    private
+
+    attr_reader :grid
   end
 end

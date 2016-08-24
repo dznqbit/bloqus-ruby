@@ -1,75 +1,57 @@
 require 'bloqus/cell'
+require 'bloqus/edge'
+require 'bloqus/vertex'
 
 module Bloqus
-  # Rough representation of a Cell grid.
+  # CellCollection allows traversal over a grid.
   class CellCollection
-    # @param cells [Array] an Array of Arrays describing the collection.
-    def initialize(cells_a)
-      cell_width = cells_a.map(&:length).max
-      cells = cells_a.map.with_index do |row, y|
-        Array.new(cell_width) do |x|
-          coordinates = CellCoordinates.new(x, y)
-          value = row[x].freeze
+    # @param data [Array] an Array of Arrays describing the collection.
+    def initialize(data)
+      max_width = data.map(&:length).max
 
-          Cell.new(coordinates, value)
-        end
+      @grid = data.map.with_index do |row, y|
+        Array.new(max_width) { |x| row[x] }
       end
-
-      @rows = cells
-    end
-
-    def to_s(&display_block)
-      rows.map do |row|
-        row.map do |c|
-          if block_given?
-            yield c.value
-          else
-            c.filled?? '.' : ' '
-          end
-        end.join('')
-      end.join("\n")
     end
 
     def to_a
-      rows.map do |row|
-        row.map(&:value)
+      grid.map do |row|
+        row.map(&:itself)
       end
     end
 
-    # def vertex(coordinates)
-    # end
+    def edge(vc1, vc2)
+      Bloqus::Edge.cc_new(cell_collection: self, v1: vertex(vc1), v2: vertex(vc2))
+    end
+
+    def vertex(coordinates)
+      Bloqus::Vertex.new(cell_collection: self, coordinates: coordinates)
+    end
 
     def cell(coordinates)
-      x, y = coordinates.to_a
-
-      if (0...width).include?(x) && (0...height).include?(y)
-        rows[coordinates.y].fetch(coordinates.x)
-      else
-        Bloqus::Cell.null(coordinates)
+      # We cannot naively allow any coordinates, because negative coordinates improperly
+      # address the "rear end" of a ruby array.
+      value = if (0...height).include?(coordinates.y) && (0...width).include?(coordinates.x)
+        grid[coordinates.y][coordinates.x]
       end
-    end
 
-    def find_all(&blk)
-      rows.flat_map do |row|
-        row.find_all(&blk)
-      end
-    end
-
-    # Returns a flat map of Cells.
-    def map(&blk)
-      rows.flat_map { |row| row.map(&blk) }
+      Bloqus::Cell.cc_new(
+        cell_collection: self,
+        coordinates: coordinates,
+        value: value
+      )
     end
 
     private
 
-    attr_reader :rows
+    attr_reader :grid
 
     def width
-      @rows.first.length
+      @grid.first.length
     end
 
     def height
-      @rows.length
+      @grid.length
     end
   end
 end

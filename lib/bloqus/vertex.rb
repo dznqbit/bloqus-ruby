@@ -1,8 +1,5 @@
-require 'bloqus/vertex_coordinates'
-require 'bloqus/cell_collection'
-
 module Bloqus
-  # Expose some tools for Vertex manipulation.
+  # Vertex provides traversal operations over verticies in a CellCollection.
   class Vertex
     extend Forwardable
 
@@ -43,16 +40,17 @@ module Bloqus
       coordinates.common_cell_coordinates(other).map { |cc| cell(cc) }
     end
 
+    def cells
+      coordinates.
+        cell_coordinates.
+        map { |cc| cell(cc) }
+    end
+
     private
 
     attr_reader :cell_collection, :coordinates
 
     def_delegator :cell_collection, :cell
 
-    def cells
-      coordinates.
-        cell_coordinates.
-        map { |cc| cell(cc) }
-    end
   end
 end

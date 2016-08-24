@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'bloqus/vertex'
+require 'bloqus/cell_collection'
 
 describe Bloqus::Vertex do
   let(:cells) { simple_cells }

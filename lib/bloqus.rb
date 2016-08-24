@@ -31,7 +31,7 @@ module Bloqus
 end
 
 require 'bloqus/coordinates'
-require 'bloqus/cell'
+require 'bloqus/cell_collection'
 require 'bloqus/board'
 require 'bloqus/game'
 require 'bloqus/piece'

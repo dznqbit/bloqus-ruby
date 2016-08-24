@@ -3,11 +3,12 @@ module Bloqus
   class Vertex
     extend Forwardable
 
-    def_delegators :coordinates, :x, :y
-
-    def initialize(cell_collection:, coordinates:)
-      @coordinates = coordinates
-      @cell_collection = cell_collection
+    # @param cell_collection [CellCollection] the CellCollection
+    # @param coordinates [Coordinates] the coordinates of the Vertex
+    def self.cc_new(cell_collection:, coordinates:)
+      obj = allocate
+      obj.send(:initialize, cell_collection: @cell_collection, coordinates: coordinates)
+      obj
     end
 
     def corner?
@@ -21,25 +22,16 @@ module Bloqus
       three_values && at_least_one_filled
     end
 
-    # Next clockwise vertex
-    def next
-      if cells.count(&:filled?) == 3
-        edges.last
-      else
-        edges.first
-      end
-    end
-
+    # Returns all adjacent edges.
     def edges
-      coordinates.neighbors.find_all do |vc|
-        common_cells(vc).count(&:filled?) == 1
+      all_edges = clockwise_directions.map do |direction|
+        neighbor_vc = VertexCoordinate.new(*direction)
+        neighbor_v = vertex(neighbor_vc)
+        edge = edge(self, neighbor_v)
       end
     end
 
-    def common_cells(other)
-      coordinates.common_cell_coordinates(other).map { |cc| cell(cc) }
-    end
-
+    # Returns all adjacent cells.
     def cells
       coordinates.
         cell_coordinates.
@@ -48,9 +40,17 @@ module Bloqus
 
     private
 
+    def self.new(cell_collection:, coordinates:)
+      raise ArgumentError.new("Please access #{self.class.name} through CellCollection")
+    end
+
+    def initialize(cell_collection:, coordinates:)
+      @coordinates = coordinates
+      @cell_collection = cell_collection
+    end
+
     attr_reader :cell_collection, :coordinates
 
-    def_delegator :cell_collection, :cell
-
+    def_delegators :cell_collection, :cell, :edge, :vertex
   end
 end

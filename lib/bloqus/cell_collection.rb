@@ -25,7 +25,7 @@ module Bloqus
     end
 
     def vertex(coordinates)
-      Bloqus::Vertex.new(cell_collection: self, coordinates: coordinates)
+      Bloqus::Vertex.cc_new(cell_collection: self, coordinates: coordinates)
     end
 
     def cell(coordinates)

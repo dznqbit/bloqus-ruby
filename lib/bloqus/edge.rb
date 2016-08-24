@@ -34,6 +34,14 @@ module Bloqus
       v1.cells[(clockwise_directions.index(direction) + 3) % 4]
     end
 
+    def origin
+      v1
+    end
+
+    def terminus
+      v2
+    end
+
     private
 
     attr_reader :cell_collection, :v1, :v2

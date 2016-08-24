@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'bloqus/vertex_coordinates'
+require 'bloqus/coordinates'
 
 describe Bloqus::VertexCoordinates do
   let(:x) { rand(20) + 1 }

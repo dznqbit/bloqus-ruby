@@ -1,10 +1,13 @@
-require 'bloqus/vertex_coordinates'
+require 'bloqus/coordinates'
+require 'bloqus/coordinates_helper'
+
 require 'bloqus/directions'
 require 'bloqus/cell_collection'
 
 module BloqusSpecHelper
   extend Forwardable
   include Bloqus::Directions
+  include Bloqus::CoordinatesHelper
 
   # Returns a shape like
   # ***
@@ -34,17 +37,5 @@ module BloqusSpecHelper
 
   def cells_to_s(cells)
     Bloqus::TextCellPresenter.new(cells: cells).to_s
-  end
-
-  protected
-
-  # Convenience vertex coordinates
-  def vc(x, y)
-    Bloqus::VertexCoordinates.new(x, y)
-  end
-
-  # Convenience cell coordinates
-  def cc(x, y)
-    Bloqus::CellCoordinates.new(x,y )
   end
 end

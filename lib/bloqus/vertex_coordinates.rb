@@ -1,8 +1,8 @@
-require 'bloqus/coordinates'
+require 'bloqus/coordinates_helper'
 
 module Bloqus
   VertexCoordinates = Class.new(Coordinates) do
-    include Directions
+    include CoordinatesHelper
 
     # Clockwise, starting with lower right.
     def cell_coordinates
@@ -33,12 +33,6 @@ module Bloqus
 
     def to_s
       "V#{super}"
-    end
-
-    private
-
-    def cc(x, y)
-      CellCoordinates.new(x, y)
     end
   end
 end

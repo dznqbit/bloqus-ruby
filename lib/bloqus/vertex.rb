@@ -2,12 +2,13 @@ module Bloqus
   # Vertex provides traversal operations over verticies in a CellCollection.
   class Vertex
     extend Forwardable
+    include Directions
 
     # @param cell_collection [CellCollection] the CellCollection
     # @param coordinates [Coordinates] the coordinates of the Vertex
     def self.cc_new(cell_collection:, coordinates:)
       obj = allocate
-      obj.send(:initialize, cell_collection: @cell_collection, coordinates: coordinates)
+      obj.send(:initialize, cell_collection: cell_collection, coordinates: coordinates)
       obj
     end
 
@@ -25,7 +26,11 @@ module Bloqus
     # Returns all adjacent edges.
     def edges
       all_edges = clockwise_directions.map do |direction|
-        neighbor_vc = VertexCoordinate.new(*direction)
+        neighbor_vc = VertexCoordinates.new(
+          coordinates.x + direction[0],
+          coordinates.y + direction[1]
+        )
+
         neighbor_v = vertex(neighbor_vc)
         edge = edge(self, neighbor_v)
       end
@@ -36,6 +41,11 @@ module Bloqus
       coordinates.
         cell_coordinates.
         map { |cc| cell(cc) }
+    end
+
+    def ==(rhs)
+      coordinates == rhs.send(:coordinates) &&
+      cell_collection == rhs.send(:cell_collection)
     end
 
     private
@@ -52,5 +62,6 @@ module Bloqus
     attr_reader :cell_collection, :coordinates
 
     def_delegators :cell_collection, :cell, :edge, :vertex
+    def_delegators :coordinates, :cell_coordinates, :x, :y
   end
 end
